@@ -69,17 +69,6 @@ def syncData(username, password, garmin_email=None, garmin_password=None):
         dt = datetime.strptime(activity["StartTime"], "%Y-%m-%d %H:%M:%S")
         mk_time = dt.strftime("%Y-%m-%d %H:%M")
 
-        rid = activity["RideId"]
-        dt = datetime.strptime(activity["StartTime"], "%Y-%m-%d %H:%M:%S")
-        start_time_str = dt.strftime("%Y-%m-%d-%H-%M")
-        rid = str(rid)
-        fit_url = "https://%s/fit/activity?type=0&rideid=%s" % (igp_host, rid)
-        res = session.get(fit_url)
-        upload_file_name = "rid-" + rid + "-" + start_time_str + ".fit"
-        print("sync upload_file_name:" + upload_file_name)
-        with open("fit/" + upload_file_name, "wb") as file2:
-            file2.write(res.content)
-
 
         need_sync = True
         for item in global_activities:
@@ -104,9 +93,9 @@ def syncData(username, password, garmin_email=None, garmin_password=None):
             res = session.get(fit_url)
             upload_file_name = "rid-" + rid +"-"+start_time_str +".fit"
             print("sync upload_file_name:" + upload_file_name)
-            with open("fit/"+upload_file_name, "wb") as file2:
+            with open(upload_file_name, "wb") as file2:
                 file2.write(res.content)
-            with open("fit/" + upload_file_name, 'rb') as fd:
+            with open(upload_file_name, 'rb') as fd:
                 uploaded = requests.post('https://connectapi.garmin.com/upload-service/upload',
                                          files={'file': fd},
                                          headers={'authorization': global_garth.oauth2_token.__str__()})
