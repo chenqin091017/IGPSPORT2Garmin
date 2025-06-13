@@ -50,7 +50,7 @@ def syncData(username, password, garmin_email=None, garmin_password=None):
 
     global_garth = Client()
     try:
-        # global_garth.login(garmin_email, garmin_password)
+        global_garth.login(garmin_email, garmin_password)
         print("")
     except Exception as e:
         print("登录态失败")
