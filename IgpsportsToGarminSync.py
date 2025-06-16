@@ -102,5 +102,5 @@ def syncData(username, password, garmin_email=None, garmin_password=None):
                 # uploaded = global_garth.upload(fd)
                 print(uploaded.content)
 
-
+# USERNAME/PASSWORD配置IGPSports的账号  GARMIN_EMAIL/GARMIN_PASSWORD配置Garmin国际区的账号
 activity = syncData(os.getenv("USERNAME"), os.getenv("PASSWORD"), os.getenv("GARMIN_EMAIL"), os.getenv("GARMIN_PASSWORD"))

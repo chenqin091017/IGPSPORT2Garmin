@@ -1,4 +1,4 @@
-name: IGPSport Data Sync To Germin 
+name: IGPSport Data Sync To Garmin
 
 on:
   schedule:
@@ -28,4 +28,4 @@ jobs:
         GARMIN_EMAIL: ${{ secrets.GARMIN_EMAIL }}
         GARMIN_PASSWORD: ${{ secrets.GARMIN_PASSWORD }}
       run: |
-        python IgpsportsToGerminSync.py
+        python IgpsportsToGarminSync.py
