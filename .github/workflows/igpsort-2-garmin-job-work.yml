@@ -2,7 +2,7 @@ name: IGPSport Data Sync To Garmin
 
 on:
   schedule:
-    - cron: '0 2,14 * * *'
+    - cron: '0 2,12 * * *'
   watch:
     types: started
 
