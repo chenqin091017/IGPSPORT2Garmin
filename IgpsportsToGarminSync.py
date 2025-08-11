@@ -53,16 +53,6 @@ def syncData(username, password, garmin_email=None, garmin_password=None):
     access_token = login_data['access_token']
     token_type = login_data['token_type']
     authorization = token_type+' '+access_token
-    # 获取igpsport的所有骑行数据，将每个骑行的fit文件url放入dict中
-    url = "https://prod.zh.igpsport.com/service/web-gateway/web-analyze/activity/queryMyActivity?pageNo=%s&pageSize=10&reqType=0&sort=1"
-    headers = {'content-type': "application/json", 'Authorization': authorization}
-    fit_dict = dict()
-    for i in range(1,2):
-        response = requests.get(url%str(i),headers=headers)
-        result = json.loads(response.text)
-        myActivities = result["data"]["rows"]
-        for myActivitie in myActivities :
-            fit_dict[str(myActivitie["rideId"])] = str(myActivitie["fitOssPath"])
     global_garth = Client()
     try:
         global_garth.login(garmin_email, garmin_password)
@@ -103,8 +93,11 @@ def syncData(username, password, garmin_email=None, garmin_password=None):
             dt = datetime.strptime(sync_item["StartTime"], "%Y-%m-%d %H:%M:%S")
             start_time_str = dt.strftime("%Y-%m-%d-%H-%M")
             rid = str(rid)
-
-            fit_url = fit_dict.get(rid)
+            get_fit_url = 'https://prod.zh.igpsport.com/service/web-gateway/web-analyze/activity/getDownloadUrl/'+rid
+            headers = {'content-type': "application/json", 'Authorization': authorization}
+            response = requests.get(get_fit_url, headers=headers)
+            result = json.loads(response.text)
+            fit_url = result["data"]
             res = requests.get(fit_url)
             # fit_url = "https://%s/fit/activity?type=0&rideid=%s" % (igp_host, rid)
             # res = session.get(fit_url)
